@@ -4,10 +4,11 @@ import 'package:movies/src/models/pelicula_model.dart';
 
 class PeliculasProviders {
   String _apyKey = 'ee43515f5b5ad1ccc992d00ce042147f';
-  String _url = 'api.themoviedb.org';
+  String _url = 'api.themoviedb.org/3';
   String _language = 'es-ES';
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url) async {
+
     final resp = await http.get(url);
     final decodeData = json.decode(resp.body);
     final peliculas = new Peliculas.fromJsonList(decodeData['results']);
@@ -16,7 +17,7 @@ class PeliculasProviders {
   }
 
   Future<List<Pelicula>> getEnCines() async {
-    final url = Uri.https(_url, '3/movie/now_playing',
+    final url = Uri.https(_url, 'movie/now_playing',
         {'api_key': _apyKey, 'language': _language});
 
     return await _procesarRespuesta(url);
@@ -24,7 +25,7 @@ class PeliculasProviders {
 
   Future<List<Pelicula>> getPopulares() async {
     final url = Uri.https(
-        _url, '3/movie/popular', {'api_key': _apyKey, 'language': _language});
+        _url, 'movie/popular', {'api_key': _apyKey, 'language': _language});
 
     return await _procesarRespuesta(url);
   }
